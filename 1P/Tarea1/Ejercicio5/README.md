@@ -1,1 +1,0 @@
-# 30738_GrupoAppsMoviles
