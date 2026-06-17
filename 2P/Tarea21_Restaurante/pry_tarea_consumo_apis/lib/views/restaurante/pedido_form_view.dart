@@ -4,11 +4,18 @@ import 'package:provider/provider.dart';
 import '../../models/pedido.dart';
 import '../../models/plato.dart';
 import '../../viewmodels/pedido_viewmodel.dart';
+import '../../widgets/atomos/boton_principal.dart';
+import '../../widgets/atomos/campo_formulario.dart';
+import '../../widgets/moleculas/resumen_producto.dart';
+import '../../widgets/moleculas/tarjeta_resumen.dart';
 
 class PedidoFormView extends StatefulWidget {
   final Plato plato;
 
-  const PedidoFormView({super.key, required this.plato});
+  const PedidoFormView({
+    super.key,
+    required this.plato,
+  });
 
   @override
   State<PedidoFormView> createState() => _PedidoFormViewState();
@@ -17,15 +24,17 @@ class PedidoFormView extends StatefulWidget {
 class _PedidoFormViewState extends State<PedidoFormView> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _clienteController = TextEditingController();
-  final TextEditingController _cantidadController = TextEditingController();
+  final TextEditingController _clienteController =
+      TextEditingController();
+
+  final TextEditingController _cantidadController =
+      TextEditingController();
 
   double _total = 0;
 
   @override
   void initState() {
     super.initState();
-
     _cantidadController.addListener(_calcularTotal);
   }
 
@@ -37,7 +46,8 @@ class _PedidoFormViewState extends State<PedidoFormView> {
   }
 
   void _calcularTotal() {
-    final cantidad = int.tryParse(_cantidadController.text.trim()) ?? 0;
+    final cantidad =
+        int.tryParse(_cantidadController.text.trim()) ?? 0;
 
     setState(() {
       _total = cantidad * widget.plato.precio;
@@ -51,7 +61,9 @@ class _PedidoFormViewState extends State<PedidoFormView> {
 
     final pedido = Pedido(
       cliente: _clienteController.text.trim(),
-      cantidad: int.parse(_cantidadController.text.trim()),
+      cantidad: int.parse(
+        _cantidadController.text.trim(),
+      ),
       platoId: widget.plato.id!,
     );
 
@@ -65,7 +77,7 @@ class _PedidoFormViewState extends State<PedidoFormView> {
           ok
               ? 'Pedido registrado correctamente'
               : pedidoViewModel.errorMessage ??
-                    'No se pudo registrar el pedido',
+                  'No se pudo registrar el pedido',
         ),
       ),
     );
@@ -82,8 +94,6 @@ class _PedidoFormViewState extends State<PedidoFormView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Registrar pedido'),
-        backgroundColor: Colors.deepOrange,
-        foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(18),
@@ -91,49 +101,19 @@ class _PedidoFormViewState extends State<PedidoFormView> {
           key: _formKey,
           child: Column(
             children: [
-              Card(
-                elevation: 3,
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.plato.nombre,
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      Text(widget.plato.descripcion ?? 'Sin descripción'),
-
-                      const SizedBox(height: 8),
-
-                      Text(
-                        'Precio unitario: \$${widget.plato.precio.toStringAsFixed(2)}',
-                        style: const TextStyle(
-                          fontSize: 17,
-                          color: Colors.deepOrange,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              ResumenProducto(
+                titulo: widget.plato.nombre,
+                descripcion:
+                    widget.plato.descripcion ?? 'Sin descripción',
+                precio: widget.plato.precio,
+                disponible: widget.plato.disponible,
+                icono: Icons.restaurant_rounded,
               ),
-
               const SizedBox(height: 18),
-
-              TextFormField(
-                controller: _clienteController,
-                decoration: const InputDecoration(
-                  labelText: 'Nombre del cliente',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person),
-                ),
+              CampoFormulario(
+                controlador: _clienteController,
+                etiqueta: 'Nombre del cliente',
+                icono: Icons.person_outline_rounded,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return 'Ingrese el nombre del cliente';
@@ -141,17 +121,12 @@ class _PedidoFormViewState extends State<PedidoFormView> {
                   return null;
                 },
               ),
-
               const SizedBox(height: 14),
-
-              TextFormField(
-                controller: _cantidadController,
-                decoration: const InputDecoration(
-                  labelText: 'Cantidad',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.numbers),
-                ),
-                keyboardType: TextInputType.number,
+              CampoFormulario(
+                controlador: _cantidadController,
+                etiqueta: 'Cantidad',
+                icono: Icons.numbers_rounded,
+                tipoTeclado: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return 'Ingrese la cantidad';
@@ -170,42 +145,23 @@ class _PedidoFormViewState extends State<PedidoFormView> {
                   return null;
                 },
               ),
-
               const SizedBox(height: 20),
-
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  color: Colors.deepOrange.shade50,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  'Total: \$${_total.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.deepOrange,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+              TarjetaResumen(
+                titulo: 'Total del pedido',
+                valor: '\$${_total.toStringAsFixed(2)}',
+                icono: Icons.payments_outlined,
               ),
-
               const SizedBox(height: 24),
-
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: pedidoViewModel.isLoading
-                      ? null
-                      : _registrarPedido,
-                  icon: const Icon(Icons.check_circle),
-                  label: Text(
-                    pedidoViewModel.isLoading
-                        ? 'Registrando...'
-                        : 'Confirmar pedido',
-                  ),
-                ),
+              BotonPrincipal(
+                texto: pedidoViewModel.isLoading
+                    ? 'Registrando...'
+                    : 'Confirmar pedido',
+                icono: Icons.check_circle_outline_rounded,
+                cargando: pedidoViewModel.isLoading,
+                anchoCompleto: true,
+                alPresionar: pedidoViewModel.isLoading
+                    ? null
+                    : _registrarPedido,
               ),
             ],
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'themes/index.dart';
 import 'views/splash/splash_screen.dart';
 
 class MyApp extends StatelessWidget {
@@ -10,10 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Restaurante App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
-        useMaterial3: true,
-      ),
+      theme: TemaGeneral.lightTheme,
       home: const SplashScreen(),
     );
   }

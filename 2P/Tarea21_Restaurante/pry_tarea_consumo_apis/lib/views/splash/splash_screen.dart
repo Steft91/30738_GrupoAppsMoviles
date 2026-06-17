@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
+import '../../widgets/atomos/boton_principal.dart';
+import '../../widgets/atomos/campo_formulario.dart';
+import '../../widgets/moleculas/plato_card.dart';
+import '../../themes/index.dart';
 import '../restaurante/plato_list_view.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -25,7 +28,10 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 2),
     );
 
-    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    );
 
     _controller.forward();
 
@@ -34,7 +40,9 @@ class _SplashScreenState extends State<SplashScreen>
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const PlatoListView()),
+        MaterialPageRoute(
+          builder: (_) => const PlatoListView(),
+        ),
       );
     });
   }
@@ -48,27 +56,43 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepOrange,
+      backgroundColor: EsquemaColor.amarilloPrincipal,
       body: Center(
         child: FadeTransition(
           opacity: _animation,
-          child: const Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.restaurant_menu, size: 90, color: Colors.white),
-              SizedBox(height: 20),
-              Text(
-                'Restaurante App',
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+              Container(
+                width: 120,
+                height: 120,
+                decoration: const BoxDecoration(
+                  color: EsquemaColor.negroPrincipal,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.restaurant_menu_rounded,
+                  size: 62,
+                  color: EsquemaColor.amarilloPrincipal,
                 ),
               ),
-              SizedBox(height: 10),
-              Text(
+              const SizedBox(height: 24),
+              const Text(
+                'Restaurante App',
+                style: TextStyle(
+                  fontSize: 31,
+                  color: EsquemaColor.negroPrincipal,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
                 'Pedidos rápidos y fáciles',
-                style: TextStyle(fontSize: 16, color: Colors.white70),
+                style: TextStyle(
+                  fontSize: 15,
+                  color: EsquemaColor.negroSecundario,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),

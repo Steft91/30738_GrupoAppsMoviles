@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../viewmodels/pedido_viewmodel.dart';
+import '../../widgets/atomos/indicador_carga.dart';
+import '../../widgets/atomos/mensaje_estado.dart';
+import '../../widgets/moleculas/dialogo_confirmacion.dart';
+import '../../widgets/moleculas/tarjeta_registro.dart';
+import '../../widgets/organismos/restaurante_scaffold.dart';
 
 class PedidoResumenView extends StatefulWidget {
   const PedidoResumenView({super.key});
 
   @override
-  State<PedidoResumenView> createState() => _PedidoResumenViewState();
+  State<PedidoResumenView> createState() =>
+      _PedidoResumenViewState();
 }
 
 class _PedidoResumenViewState extends State<PedidoResumenView> {
@@ -21,105 +27,90 @@ class _PedidoResumenViewState extends State<PedidoResumenView> {
   }
 
   Future<void> _confirmarEliminar(int id) async {
-    final confirmar = await showDialog<bool>(
+    final confirmar = await mostrarDialogoConfirmacion(
       context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Eliminar pedido'),
-          content: const Text('¿Seguro que deseas eliminar este pedido?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancelar'),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: const Text('Eliminar'),
-            ),
-          ],
-        );
-      },
+      titulo: 'Eliminar pedido',
+      mensaje: '¿Seguro que deseas eliminar este pedido?',
+      textoConfirmar: 'Eliminar',
+      esDestructivo: true,
     );
 
-    if (confirmar == true && mounted) {
-      final viewModel = context.read<PedidoViewModel>();
-      final ok = await viewModel.eliminarPedido(id);
+    if (!confirmar || !mounted) return;
 
-      if (!mounted) return;
+    final viewModel = context.read<PedidoViewModel>();
+    final ok = await viewModel.eliminarPedido(id);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            ok
-                ? 'Pedido eliminado correctamente'
-                : viewModel.errorMessage ?? 'No se pudo eliminar el pedido',
-          ),
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          ok
+              ? 'Pedido eliminado correctamente'
+              : viewModel.errorMessage ??
+                  'No se pudo eliminar el pedido',
         ),
-      );
-    }
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final pedidoViewModel = context.watch<PedidoViewModel>();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Resumen de pedidos'),
-        backgroundColor: Colors.deepOrange,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            onPressed: () {
-              pedidoViewModel.cargarPedidos();
-            },
-            icon: const Icon(Icons.refresh),
-          ),
-        ],
-      ),
+    return RestauranteScaffold(
+      titulo: 'Resumen de pedidos',
+      seccionActual: RestauranteSeccion.pedidos,
+      actions: [
+        IconButton(
+          tooltip: 'Actualizar',
+          onPressed: pedidoViewModel.cargarPedidos,
+          icon: const Icon(Icons.refresh_rounded),
+        ),
+      ],
       body: Builder(
         builder: (context) {
           if (pedidoViewModel.isLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const IndicadorCarga();
           }
 
           if (pedidoViewModel.errorMessage != null) {
-            return Center(child: Text(pedidoViewModel.errorMessage!));
+            return MensajeEstado(
+              mensaje: pedidoViewModel.errorMessage!,
+              icono: Icons.error_outline_rounded,
+              textoAccion: 'Reintentar',
+              alPresionar: pedidoViewModel.cargarPedidos,
+            );
           }
 
           if (pedidoViewModel.pedidos.isEmpty) {
-            return const Center(child: Text('No hay pedidos registrados'));
+            return const MensajeEstado(
+              mensaje: 'No hay pedidos registrados',
+              icono: Icons.receipt_long_outlined,
+            );
           }
 
           return ListView.builder(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 12,
+            ),
             itemCount: pedidoViewModel.pedidos.length,
             itemBuilder: (context, index) {
               final pedido = pedidoViewModel.pedidos[index];
 
-              return Card(
-                margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.receipt_long,
-                    color: Colors.deepOrange,
-                  ),
-                  title: Text(
-                    pedido.cliente,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(
-                    'Plato: ${pedido.platoNombre ?? pedido.platoId}\n'
-                    'Cantidad: ${pedido.cantidad}\n'
-                    'Total: \$${pedido.total?.toStringAsFixed(2) ?? '0.00'}',
-                  ),
-                  isThreeLine: true,
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: pedido.id == null
-                        ? null
-                        : () => _confirmarEliminar(pedido.id!),
-                  ),
-                ),
+              return TarjetaRegistro(
+                titulo: pedido.cliente,
+                icono: Icons.receipt_long_rounded,
+                datos: [
+                  'Plato: ${pedido.platoNombre ?? pedido.platoId}',
+                  'Cantidad: ${pedido.cantidad}',
+                  'Total: \$${pedido.total?.toStringAsFixed(2) ?? '0.00'}',
+                ],
+                iconoAccion: Icons.delete_outline_rounded,
+                alPresionarAccion: pedido.id == null
+                    ? null
+                    : () => _confirmarEliminar(pedido.id!),
               );
             },
           );

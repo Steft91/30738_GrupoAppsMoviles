@@ -3,11 +3,18 @@ import 'package:provider/provider.dart';
 
 import '../../models/plato.dart';
 import '../../viewmodels/plato_viewmodel.dart';
+import '../../widgets/atomos/boton_principal.dart';
+import '../../widgets/atomos/campo_formulario.dart';
+import '../../widgets/atomos/selector_disponibilidad.dart';
+import '../../widgets/organismos/restaurante_scaffold.dart';
 
 class PlatoFormView extends StatefulWidget {
   final Plato? plato;
 
-  const PlatoFormView({super.key, this.plato});
+  const PlatoFormView({
+    super.key,
+    this.plato,
+  });
 
   @override
   State<PlatoFormView> createState() => _PlatoFormViewState();
@@ -28,7 +35,9 @@ class _PlatoFormViewState extends State<PlatoFormView> {
   void initState() {
     super.initState();
 
-    _nombreController = TextEditingController(text: widget.plato?.nombre ?? '');
+    _nombreController = TextEditingController(
+      text: widget.plato?.nombre ?? '',
+    );
 
     _descripcionController = TextEditingController(
       text: widget.plato?.descripcion ?? '',
@@ -64,7 +73,10 @@ class _PlatoFormViewState extends State<PlatoFormView> {
     bool ok;
 
     if (_esEdicion) {
-      ok = await viewModel.actualizarPlato(widget.plato!.id!, plato);
+      ok = await viewModel.actualizarPlato(
+        widget.plato!.id!,
+        plato,
+      );
     } else {
       ok = await viewModel.crearPlato(plato);
     }
@@ -76,9 +88,10 @@ class _PlatoFormViewState extends State<PlatoFormView> {
         content: Text(
           ok
               ? _esEdicion
-                    ? 'Plato actualizado correctamente'
-                    : 'Plato creado correctamente'
-              : viewModel.errorMessage ?? 'No se pudo guardar el plato',
+                  ? 'Plato actualizado correctamente'
+                  : 'Plato creado correctamente'
+              : viewModel.errorMessage ??
+                  'No se pudo guardar el plato',
         ),
       ),
     );
@@ -92,25 +105,19 @@ class _PlatoFormViewState extends State<PlatoFormView> {
   Widget build(BuildContext context) {
     final viewModel = context.watch<PlatoViewModel>();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_esEdicion ? 'Editar plato' : 'Nuevo plato'),
-        backgroundColor: Colors.deepOrange,
-        foregroundColor: Colors.white,
-      ),
+    return RestauranteScaffold(
+      titulo: _esEdicion ? 'Editar plato' : 'Nuevo plato',
+      seccionActual: RestauranteSeccion.nuevoPlato,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(18),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
-              TextFormField(
-                controller: _nombreController,
-                decoration: const InputDecoration(
-                  labelText: 'Nombre del plato',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.restaurant),
-                ),
+              CampoFormulario(
+                controlador: _nombreController,
+                etiqueta: 'Nombre del plato',
+                icono: Icons.restaurant_rounded,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return 'Ingrese el nombre del plato';
@@ -118,29 +125,19 @@ class _PlatoFormViewState extends State<PlatoFormView> {
                   return null;
                 },
               ),
-
               const SizedBox(height: 14),
-
-              TextFormField(
-                controller: _descripcionController,
-                decoration: const InputDecoration(
-                  labelText: 'Descripción',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.description),
-                ),
+              CampoFormulario(
+                controlador: _descripcionController,
+                etiqueta: 'Descripción',
+                icono: Icons.description_outlined,
                 maxLines: 3,
               ),
-
               const SizedBox(height: 14),
-
-              TextFormField(
-                controller: _precioController,
-                decoration: const InputDecoration(
-                  labelText: 'Precio',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.attach_money),
-                ),
-                keyboardType: const TextInputType.numberWithOptions(
+              CampoFormulario(
+                controlador: _precioController,
+                etiqueta: 'Precio',
+                icono: Icons.attach_money_rounded,
+                tipoTeclado: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
                 validator: (value) {
@@ -161,40 +158,31 @@ class _PlatoFormViewState extends State<PlatoFormView> {
                   return null;
                 },
               ),
-
-              const SizedBox(height: 14),
-
-              SwitchListTile(
-                value: _disponible,
-                title: const Text('Disponible'),
-                subtitle: Text(
-                  _disponible
-                      ? 'El plato puede ser pedido'
-                      : 'El plato no estará disponible',
-                ),
-                activeColor: Colors.deepOrange,
-                onChanged: (value) {
+              const SizedBox(height: 18),
+              SelectorDisponibilidad(
+                valor: _disponible,
+                titulo: 'Disponible',
+                descripcionActiva: 'El plato puede ser pedido',
+                descripcionInactiva:
+                    'El plato no estará disponible',
+                alCambiar: (value) {
                   setState(() {
                     _disponible = value;
                   });
                 },
               ),
-
-              const SizedBox(height: 22),
-
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: viewModel.isLoading ? null : _guardarPlato,
-                  icon: const Icon(Icons.save),
-                  label: Text(
-                    viewModel.isLoading
-                        ? 'Guardando...'
-                        : _esEdicion
+              const SizedBox(height: 24),
+              BotonPrincipal(
+                texto: viewModel.isLoading
+                    ? 'Guardando...'
+                    : _esEdicion
                         ? 'Actualizar plato'
                         : 'Crear plato',
-                  ),
-                ),
+                icono: Icons.save_rounded,
+                cargando: viewModel.isLoading,
+                anchoCompleto: true,
+                alPresionar:
+                    viewModel.isLoading ? null : _guardarPlato,
               ),
             ],
           ),
