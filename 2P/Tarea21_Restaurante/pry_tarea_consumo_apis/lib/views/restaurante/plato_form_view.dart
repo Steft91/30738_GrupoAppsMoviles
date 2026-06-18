@@ -11,10 +11,7 @@ import '../../widgets/organismos/restaurante_scaffold.dart';
 class PlatoFormView extends StatefulWidget {
   final Plato? plato;
 
-  const PlatoFormView({
-    super.key,
-    this.plato,
-  });
+  const PlatoFormView({super.key, this.plato});
 
   @override
   State<PlatoFormView> createState() => _PlatoFormViewState();
@@ -26,6 +23,7 @@ class _PlatoFormViewState extends State<PlatoFormView> {
   late TextEditingController _nombreController;
   late TextEditingController _descripcionController;
   late TextEditingController _precioController;
+  late TextEditingController _imagenUrlController;
 
   bool _disponible = true;
 
@@ -35,9 +33,7 @@ class _PlatoFormViewState extends State<PlatoFormView> {
   void initState() {
     super.initState();
 
-    _nombreController = TextEditingController(
-      text: widget.plato?.nombre ?? '',
-    );
+    _nombreController = TextEditingController(text: widget.plato?.nombre ?? '');
 
     _descripcionController = TextEditingController(
       text: widget.plato?.descripcion ?? '',
@@ -45,6 +41,10 @@ class _PlatoFormViewState extends State<PlatoFormView> {
 
     _precioController = TextEditingController(
       text: widget.plato?.precio.toString() ?? '',
+    );
+
+    _imagenUrlController = TextEditingController(
+      text: widget.plato?.imagenUrl ?? '',
     );
 
     _disponible = widget.plato?.disponible ?? true;
@@ -55,6 +55,7 @@ class _PlatoFormViewState extends State<PlatoFormView> {
     _nombreController.dispose();
     _descripcionController.dispose();
     _precioController.dispose();
+    _imagenUrlController.dispose();
     super.dispose();
   }
 
@@ -67,16 +68,16 @@ class _PlatoFormViewState extends State<PlatoFormView> {
       nombre: _nombreController.text.trim(),
       descripcion: _descripcionController.text.trim(),
       precio: double.parse(_precioController.text.trim()),
+      imagenUrl: _imagenUrlController.text.trim().isEmpty
+          ? null
+          : _imagenUrlController.text.trim(),
       disponible: _disponible,
     );
 
     bool ok;
 
     if (_esEdicion) {
-      ok = await viewModel.actualizarPlato(
-        widget.plato!.id!,
-        plato,
-      );
+      ok = await viewModel.actualizarPlato(widget.plato!.id!, plato);
     } else {
       ok = await viewModel.crearPlato(plato);
     }
@@ -88,10 +89,9 @@ class _PlatoFormViewState extends State<PlatoFormView> {
         content: Text(
           ok
               ? _esEdicion
-                  ? 'Plato actualizado correctamente'
-                  : 'Plato creado correctamente'
-              : viewModel.errorMessage ??
-                  'No se pudo guardar el plato',
+                    ? 'Plato actualizado correctamente'
+                    : 'Plato creado correctamente'
+              : viewModel.errorMessage ?? 'No se pudo guardar el plato',
         ),
       ),
     );
@@ -158,13 +158,36 @@ class _PlatoFormViewState extends State<PlatoFormView> {
                   return null;
                 },
               ),
+              const SizedBox(height: 14),
+              CampoFormulario(
+                controlador: _imagenUrlController,
+                etiqueta: 'URL de imagen',
+                icono: Icons.image_outlined,
+                tipoTeclado: TextInputType.url,
+                validator: (value) {
+                  final texto = value?.trim() ?? '';
+
+                  if (texto.isEmpty) {
+                    return null;
+                  }
+
+                  final uri = Uri.tryParse(texto);
+
+                  if (uri == null ||
+                      uri.host.isEmpty ||
+                      (uri.scheme != 'http' && uri.scheme != 'https')) {
+                    return 'Ingrese una URL válida';
+                  }
+
+                  return null;
+                },
+              ),
               const SizedBox(height: 18),
               SelectorDisponibilidad(
                 valor: _disponible,
                 titulo: 'Disponible',
                 descripcionActiva: 'El plato puede ser pedido',
-                descripcionInactiva:
-                    'El plato no estará disponible',
+                descripcionInactiva: 'El plato no estará disponible',
                 alCambiar: (value) {
                   setState(() {
                     _disponible = value;
@@ -176,13 +199,12 @@ class _PlatoFormViewState extends State<PlatoFormView> {
                 texto: viewModel.isLoading
                     ? 'Guardando...'
                     : _esEdicion
-                        ? 'Actualizar plato'
-                        : 'Crear plato',
+                    ? 'Actualizar plato'
+                    : 'Crear plato',
                 icono: Icons.save_rounded,
                 cargando: viewModel.isLoading,
                 anchoCompleto: true,
-                alPresionar:
-                    viewModel.isLoading ? null : _guardarPlato,
+                alPresionar: viewModel.isLoading ? null : _guardarPlato,
               ),
             ],
           ),

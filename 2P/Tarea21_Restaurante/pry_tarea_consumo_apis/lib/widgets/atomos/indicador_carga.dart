@@ -5,10 +5,7 @@ import '../../themes/esquema_color.dart';
 class IndicadorCarga extends StatelessWidget {
   final String? mensaje;
 
-  const IndicadorCarga({
-    super.key,
-    this.mensaje,
-  });
+  const IndicadorCarga({super.key, this.mensaje});
 
   @override
   Widget build(BuildContext context) {

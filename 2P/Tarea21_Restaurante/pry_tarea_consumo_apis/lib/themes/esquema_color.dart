@@ -30,6 +30,11 @@ class EsquemaColor {
   static const Color blanco = blancoPapel;
   static const Color verdeExito = verdeComic;
   static const Color rojoError = rojoComic;
+  static const Color lavanda = azulComic;
+  static const Color azulPastel = azulClaro;
+  static const Color rosaPastel = naranjaClaro;
+  static const Color textoPrincipal = negroTinta;
+  static const Color textoSecundario = grisTexto;
 
   static const ColorScheme esquemaClaro = ColorScheme(
     brightness: Brightness.light,

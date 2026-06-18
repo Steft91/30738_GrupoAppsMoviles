@@ -27,10 +27,7 @@ class MensajeEstado extends StatelessWidget {
           decoration: BoxDecoration(
             color: EsquemaColor.blancoPapel,
             borderRadius: BorderRadius.circular(24),
-            border: Border.all(
-              color: EsquemaColor.negroTinta,
-              width: 2,
-            ),
+            border: Border.all(color: EsquemaColor.negroTinta, width: 2),
             boxShadow: const [
               BoxShadow(
                 color: EsquemaColor.negroTinta,
@@ -48,16 +45,9 @@ class MensajeEstado extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: EsquemaColor.azulComic,
                   shape: BoxShape.circle,
-                  border: Border.all(
-                    color: EsquemaColor.negroTinta,
-                    width: 2,
-                  ),
+                  border: Border.all(color: EsquemaColor.negroTinta, width: 2),
                 ),
-                child: Icon(
-                  icono,
-                  size: 42,
-                  color: EsquemaColor.negroTinta,
-                ),
+                child: Icon(icono, size: 42, color: EsquemaColor.negroTinta),
               ),
               const SizedBox(height: 18),
               Text(
@@ -69,8 +59,7 @@ class MensajeEstado extends StatelessWidget {
                   fontWeight: FontWeight.w800,
                 ),
               ),
-              if (textoAccion != null &&
-                  alPresionar != null) ...[
+              if (textoAccion != null && alPresionar != null) ...[
                 const SizedBox(height: 20),
                 BotonPrincipal(
                   texto: textoAccion!,

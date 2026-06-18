@@ -31,8 +31,7 @@ class ResumenProducto extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (imagenUrl != null &&
-              imagenUrl!.isNotEmpty)
+          if (imagenUrl != null && imagenUrl!.isNotEmpty)
             ClipRRect(
               borderRadius: BorderRadius.circular(18),
               child: Image.network(
@@ -40,7 +39,7 @@ class ResumenProducto extends StatelessWidget {
                 width: double.infinity,
                 height: 190,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) {
+                errorBuilder: (_, _, _) {
                   return _contenedorIcono();
                 },
               ),
@@ -63,12 +62,8 @@ class ResumenProducto extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               EtiquetaEstado(
-                texto: disponible
-                    ? 'Disponible'
-                    : 'No disponible',
-                tipo: disponible
-                    ? TipoEstado.exito
-                    : TipoEstado.error,
+                texto: disponible ? 'Disponible' : 'No disponible',
+                tipo: disponible ? TipoEstado.exito : TipoEstado.error,
               ),
             ],
           ),
@@ -83,10 +78,7 @@ class ResumenProducto extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 18),
-          TextoPrecio(
-            valor: precio,
-            destacado: true,
-          ),
+          TextoPrecio(valor: precio, destacado: true),
         ],
       ),
     );
@@ -99,16 +91,9 @@ class ResumenProducto extends StatelessWidget {
       decoration: BoxDecoration(
         color: EsquemaColor.azulComic,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(
-          color: EsquemaColor.negroTinta,
-          width: 2,
-        ),
+        border: Border.all(color: EsquemaColor.negroTinta, width: 2),
       ),
-      child: Icon(
-        icono,
-        size: 72,
-        color: EsquemaColor.negroTinta,
-      ),
+      child: Icon(icono, size: 72, color: EsquemaColor.negroTinta),
     );
   }
 }

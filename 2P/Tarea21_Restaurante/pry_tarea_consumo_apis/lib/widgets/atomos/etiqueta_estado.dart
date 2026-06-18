@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../themes/esquema_color.dart';
 
-enum TipoEstado {
-  exito,
-  error,
-  advertencia,
-  informacion,
-}
+enum TipoEstado { exito, error, advertencia, informacion }
 
 class EtiquetaEstado extends StatelessWidget {
   final String texto;
@@ -46,17 +41,11 @@ class EtiquetaEstado extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 6,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: colorFondo,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: EsquemaColor.negroTinta,
-          width: 2,
-        ),
+        border: Border.all(color: EsquemaColor.negroTinta, width: 2),
         boxShadow: const [
           BoxShadow(
             color: EsquemaColor.negroTinta,

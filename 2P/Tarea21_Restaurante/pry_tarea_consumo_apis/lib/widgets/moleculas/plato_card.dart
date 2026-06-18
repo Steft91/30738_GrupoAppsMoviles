@@ -56,20 +56,39 @@ class PlatoCard extends StatelessWidget {
                   ),
                   child: Stack(
                     children: [
-                      const Center(
-                        child: Icon(
-                          Icons.restaurant_menu_rounded,
-                          size: 70,
-                          color: EsquemaColor.negroTinta,
+                      Positioned.fill(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child:
+                              plato.imagenUrl != null &&
+                                  plato.imagenUrl!.isNotEmpty
+                              ? Image.network(
+                                  plato.imagenUrl!,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (_, _, _) {
+                                    return const Center(
+                                      child: Icon(
+                                        Icons.restaurant_menu_rounded,
+                                        size: 70,
+                                        color: EsquemaColor.negroTinta,
+                                      ),
+                                    );
+                                  },
+                                )
+                              : const Center(
+                                  child: Icon(
+                                    Icons.restaurant_menu_rounded,
+                                    size: 70,
+                                    color: EsquemaColor.negroTinta,
+                                  ),
+                                ),
                         ),
                       ),
                       Positioned(
                         top: 10,
                         right: 10,
                         child: EtiquetaEstado(
-                          texto: plato.disponible
-                              ? 'Disponible'
-                              : 'Agotado',
+                          texto: plato.disponible ? 'Disponible' : 'Agotado',
                           tipo: plato.disponible
                               ? TipoEstado.exito
                               : TipoEstado.error,
@@ -109,11 +128,7 @@ class PlatoCard extends StatelessWidget {
 
               const SizedBox(height: 8),
 
-              TextoPrecio(
-                valor: plato.precio,
-                destacado: true,
-                tamano: 16,
-              ),
+              TextoPrecio(valor: plato.precio, destacado: true, tamano: 16),
 
               const SizedBox(height: 10),
 

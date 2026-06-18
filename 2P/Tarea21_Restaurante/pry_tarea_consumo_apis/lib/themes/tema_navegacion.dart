@@ -10,10 +10,7 @@ class TemaNavegacion {
       unselectedItemColor: EsquemaColor.blancoPapel,
       type: BottomNavigationBarType.fixed,
       elevation: 0,
-      selectedLabelStyle: TextStyle(
-        fontSize: 11,
-        fontWeight: FontWeight.w900,
-      ),
+      selectedLabelStyle: TextStyle(fontSize: 11, fontWeight: FontWeight.w900),
       unselectedLabelStyle: TextStyle(
         fontSize: 11,
         fontWeight: FontWeight.w600,
@@ -27,36 +24,28 @@ class TemaNavegacion {
       indicatorColor: EsquemaColor.amarilloPrincipal,
       elevation: 0,
       height: 72,
-      labelTextStyle: WidgetStateProperty.resolveWith(
-        (states) {
-          if (states.contains(WidgetState.selected)) {
-            return const TextStyle(
-              color: EsquemaColor.amarilloPrincipal,
-              fontSize: 11,
-              fontWeight: FontWeight.w900,
-            );
-          }
-
+      labelTextStyle: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return const TextStyle(
-            color: EsquemaColor.blancoPapel,
+            color: EsquemaColor.amarilloPrincipal,
             fontSize: 11,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w900,
           );
-        },
-      ),
-      iconTheme: WidgetStateProperty.resolveWith(
-        (states) {
-          if (states.contains(WidgetState.selected)) {
-            return const IconThemeData(
-              color: EsquemaColor.negroTinta,
-            );
-          }
+        }
 
-          return const IconThemeData(
-            color: EsquemaColor.blancoPapel,
-          );
-        },
-      ),
+        return const TextStyle(
+          color: EsquemaColor.blancoPapel,
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
+        );
+      }),
+      iconTheme: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return const IconThemeData(color: EsquemaColor.negroTinta);
+        }
+
+        return const IconThemeData(color: EsquemaColor.blancoPapel);
+      }),
     );
   }
 }

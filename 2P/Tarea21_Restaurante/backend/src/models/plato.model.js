@@ -17,30 +17,31 @@ const PlatoModel = {
   },
 
   async crear(plato) {
-    const { nombre, descripcion, precio, disponible } = plato;
+    const { nombre, descripcion, precio, imagen_url, disponible } = plato;
 
     const result = await pool.query(
-      `INSERT INTO platos (nombre, descripcion, precio, disponible)
-       VALUES ($1, $2, $3, $4)
+      `INSERT INTO platos (nombre, descripcion, precio, imagen_url, disponible)
+       VALUES ($1, $2, $3, $4, $5)
        RETURNING *`,
-      [nombre, descripcion, precio, disponible]
+      [nombre, descripcion, precio, imagen_url, disponible]
     );
 
     return result.rows[0];
   },
 
   async actualizar(id, plato) {
-    const { nombre, descripcion, precio, disponible } = plato;
+    const { nombre, descripcion, precio, imagen_url, disponible } = plato;
 
     const result = await pool.query(
       `UPDATE platos
        SET nombre = $1,
            descripcion = $2,
            precio = $3,
-           disponible = $4
-       WHERE id = $5
+           imagen_url = $4,
+           disponible = $5
+       WHERE id = $6
        RETURNING *`,
-      [nombre, descripcion, precio, disponible, id]
+      [nombre, descripcion, precio, imagen_url, disponible, id]
     );
 
     return result.rows[0];

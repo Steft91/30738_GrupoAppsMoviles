@@ -25,7 +25,7 @@ class ImagenPrincipal extends StatelessWidget {
             : Image.network(
                 url!,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) {
+                errorBuilder: (_, _, _) {
                   return Icon(icono, size: 64, color: Colors.deepOrange);
                 },
               ),

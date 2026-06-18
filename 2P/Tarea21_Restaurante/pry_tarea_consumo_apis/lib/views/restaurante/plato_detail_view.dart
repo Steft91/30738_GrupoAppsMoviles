@@ -9,17 +9,12 @@ import 'pedido_form_view.dart';
 class PlatoDetailView extends StatelessWidget {
   final Plato plato;
 
-  const PlatoDetailView({
-    super.key,
-    required this.plato,
-  });
+  const PlatoDetailView({super.key, required this.plato});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Detalle del plato'),
-      ),
+      appBar: AppBar(title: const Text('Detalle del plato')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(18),
         child: Column(
@@ -30,6 +25,7 @@ class PlatoDetailView extends StatelessWidget {
               precio: plato.precio,
               disponible: plato.disponible,
               icono: Icons.restaurant_rounded,
+              imagenUrl: plato.imagenUrl,
             ),
             const SizedBox(height: 24),
             BotonPrincipal(
@@ -41,9 +37,7 @@ class PlatoDetailView extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => PedidoFormView(
-                            plato: plato,
-                          ),
+                          builder: (_) => PedidoFormView(plato: plato),
                         ),
                       );
                     }

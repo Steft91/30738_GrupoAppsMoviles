@@ -27,7 +27,9 @@ class _PlatoListViewState extends State<PlatoListView> {
   void initState() {
     super.initState();
 
-    Future.microtask(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+
       context.read<PlatoViewModel>().cargarPlatos();
       context.read<PedidoViewModel>().cargarPedidos();
     });
@@ -54,8 +56,7 @@ class _PlatoListViewState extends State<PlatoListView> {
         content: Text(
           ok
               ? 'Plato eliminado correctamente'
-              : viewModel.errorMessage ??
-                  'No se pudo eliminar el plato',
+              : viewModel.errorMessage ?? 'No se pudo eliminar el plato',
         ),
       ),
     );
@@ -76,9 +77,7 @@ class _PlatoListViewState extends State<PlatoListView> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (_) => const PedidoResumenView(),
-              ),
+              MaterialPageRoute(builder: (_) => const PedidoResumenView()),
             );
           },
         ),
@@ -135,8 +134,8 @@ class _PlatoListViewState extends State<PlatoListView> {
                   mainAxisExtent: columnas == 1
                       ? 410
                       : columnas == 2
-                          ? 390
-                          : 360,
+                      ? 390
+                      : 360,
                 ),
                 itemBuilder: (context, index) {
                   final plato = platoViewModel.platos[index];
@@ -185,9 +184,7 @@ class _PlatoListViewState extends State<PlatoListView> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (_) => const PlatoFormView(),
-            ),
+            MaterialPageRoute(builder: (_) => const PlatoFormView()),
           );
         },
         child: const Icon(Icons.add_rounded),

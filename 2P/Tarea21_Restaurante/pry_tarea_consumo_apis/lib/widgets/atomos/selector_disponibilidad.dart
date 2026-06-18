@@ -22,14 +22,9 @@ class SelectorDisponibilidad extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: valor
-            ? EsquemaColor.amarilloSuave
-            : EsquemaColor.blancoPapel,
+        color: valor ? EsquemaColor.amarilloSuave : EsquemaColor.blancoPapel,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(
-          color: EsquemaColor.negroTinta,
-          width: 2,
-        ),
+        border: Border.all(color: EsquemaColor.negroTinta, width: 2),
         boxShadow: const [
           BoxShadow(
             color: EsquemaColor.negroTinta,
@@ -41,21 +36,15 @@ class SelectorDisponibilidad extends StatelessWidget {
       child: SwitchListTile(
         value: valor,
         onChanged: alCambiar,
-        activeColor: EsquemaColor.negroTinta,
+        activeThumbColor: EsquemaColor.negroTinta,
         activeTrackColor: EsquemaColor.amarilloPrincipal,
         inactiveThumbColor: EsquemaColor.grisTexto,
         inactiveTrackColor: EsquemaColor.grisClaro,
         title: Text(
           titulo,
-          style: const TextStyle(
-            fontWeight: FontWeight.w900,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.w900),
         ),
-        subtitle: Text(
-          valor
-              ? descripcionActiva
-              : descripcionInactiva,
-        ),
+        subtitle: Text(valor ? descripcionActiva : descripcionInactiva),
       ),
     );
   }

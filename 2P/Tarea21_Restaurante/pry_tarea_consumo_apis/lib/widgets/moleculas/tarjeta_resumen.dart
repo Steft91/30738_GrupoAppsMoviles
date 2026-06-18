@@ -28,15 +28,9 @@ class TarjetaResumen extends StatelessWidget {
             decoration: BoxDecoration(
               color: EsquemaColor.negroTinta,
               shape: BoxShape.circle,
-              border: Border.all(
-                color: EsquemaColor.negroTinta,
-                width: 2,
-              ),
+              border: Border.all(color: EsquemaColor.negroTinta, width: 2),
             ),
-            child: Icon(
-              icono,
-              color: EsquemaColor.amarilloPrincipal,
-            ),
+            child: Icon(icono, color: EsquemaColor.amarilloPrincipal),
           ),
           const SizedBox(width: 15),
           Expanded(

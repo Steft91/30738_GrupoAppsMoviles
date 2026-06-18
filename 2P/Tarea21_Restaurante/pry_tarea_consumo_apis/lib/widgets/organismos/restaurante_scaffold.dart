@@ -5,11 +5,7 @@ import '../../views/restaurante/pedido_resume_view.dart';
 import '../../views/restaurante/plato_form_view.dart';
 import '../../views/restaurante/plato_list_view.dart';
 
-enum RestauranteSeccion {
-  catalogo,
-  pedidos,
-  nuevoPlato,
-}
+enum RestauranteSeccion { catalogo, pedidos, nuevoPlato }
 
 class RestauranteScaffold extends StatelessWidget {
   final String titulo;
@@ -39,13 +35,8 @@ class RestauranteScaffold extends StatelessWidget {
             backgroundColor: Colors.transparent,
             drawer: mostrarBarraFija
                 ? null
-                : _BarraRestaurante(
-                    seccionActual: seccionActual,
-                  ),
-            appBar: AppBar(
-              title: Text(titulo),
-              actions: actions,
-            ),
+                : _BarraRestaurante(seccionActual: seccionActual),
+            appBar: AppBar(title: Text(titulo), actions: actions),
             body: mostrarBarraFija
                 ? Row(
                     children: [
@@ -69,10 +60,7 @@ class _BarraRestaurante extends StatelessWidget {
   final RestauranteSeccion seccionActual;
   final bool fija;
 
-  const _BarraRestaurante({
-    required this.seccionActual,
-    this.fija = false,
-  });
+  const _BarraRestaurante({required this.seccionActual, this.fija = false});
 
   @override
   Widget build(BuildContext context) {
@@ -87,24 +75,21 @@ class _BarraRestaurante extends StatelessWidget {
             _OpcionBarra(
               icono: Icons.restaurant_menu_rounded,
               texto: 'Catálogo',
-              seleccionada:
-                  seccionActual == RestauranteSeccion.catalogo,
+              seleccionada: seccionActual == RestauranteSeccion.catalogo,
               alPresionar: () => _irACatalogo(context),
             ),
             const SizedBox(height: 8),
             _OpcionBarra(
               icono: Icons.receipt_long_rounded,
               texto: 'Pedidos',
-              seleccionada:
-                  seccionActual == RestauranteSeccion.pedidos,
+              seleccionada: seccionActual == RestauranteSeccion.pedidos,
               alPresionar: () => _irAPedidos(context),
             ),
             const SizedBox(height: 8),
             _OpcionBarra(
               icono: Icons.add_circle_outline_rounded,
               texto: 'Nuevo plato',
-              seleccionada:
-                  seccionActual == RestauranteSeccion.nuevoPlato,
+              seleccionada: seccionActual == RestauranteSeccion.nuevoPlato,
               alPresionar: () => _irANuevoPlato(context),
             ),
             const Spacer(),
@@ -131,20 +116,14 @@ class _BarraRestaurante extends StatelessWidget {
         decoration: const BoxDecoration(
           color: EsquemaColor.negroTinta,
           border: Border(
-            right: BorderSide(
-              color: EsquemaColor.amarilloPrincipal,
-              width: 3,
-            ),
+            right: BorderSide(color: EsquemaColor.amarilloPrincipal, width: 3),
           ),
         ),
         child: contenido,
       );
     }
 
-    return Drawer(
-      backgroundColor: EsquemaColor.negroTinta,
-      child: contenido,
-    );
+    return Drawer(backgroundColor: EsquemaColor.negroTinta, child: contenido);
   }
 
   void _irACatalogo(BuildContext context) {
@@ -154,9 +133,7 @@ class _BarraRestaurante extends StatelessWidget {
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(
-        builder: (_) => const PlatoListView(),
-      ),
+      MaterialPageRoute(builder: (_) => const PlatoListView()),
     );
   }
 
@@ -167,9 +144,7 @@ class _BarraRestaurante extends StatelessWidget {
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(
-        builder: (_) => const PedidoResumenView(),
-      ),
+      MaterialPageRoute(builder: (_) => const PedidoResumenView()),
     );
   }
 
@@ -178,9 +153,7 @@ class _BarraRestaurante extends StatelessWidget {
 
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (_) => const PlatoFormView(),
-      ),
+      MaterialPageRoute(builder: (_) => const PlatoFormView()),
     );
   }
 
@@ -201,10 +174,7 @@ class _EncabezadoBarra extends StatelessWidget {
       decoration: BoxDecoration(
         color: EsquemaColor.amarilloPrincipal,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: EsquemaColor.blancoPapel,
-          width: 2,
-        ),
+        border: Border.all(color: EsquemaColor.blancoPapel, width: 2),
       ),
       child: Row(
         children: [
@@ -271,9 +241,7 @@ class _OpcionBarra extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: seleccionada
-          ? EsquemaColor.amarilloPrincipal
-          : Colors.transparent,
+      color: seleccionada ? EsquemaColor.amarilloPrincipal : Colors.transparent,
       borderRadius: BorderRadius.circular(8),
       child: InkWell(
         borderRadius: BorderRadius.circular(8),

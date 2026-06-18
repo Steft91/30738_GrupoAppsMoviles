@@ -20,10 +20,7 @@ class TarjetaCristal extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(24),
       child: BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaX: 18,
-          sigmaY: 18,
-        ),
+        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
         child: InkWell(
           onTap: alPresionar,
           borderRadius: BorderRadius.circular(24),

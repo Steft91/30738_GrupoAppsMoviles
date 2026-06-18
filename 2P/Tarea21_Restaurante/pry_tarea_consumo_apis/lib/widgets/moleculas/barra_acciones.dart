@@ -27,27 +27,28 @@ class BarraAcciones extends StatelessWidget {
           BotonIcono(
             icono: Icons.refresh,
             tooltip: 'Actualizar',
-            onPressed: onActualizar,
+            alPresionar: onActualizar,
           ),
         if (onAgregar != null)
           BotonIcono(
             icono: Icons.add,
             tooltip: 'Agregar',
-            onPressed: onAgregar,
+            alPresionar: onAgregar,
+            tipo: TipoBotonIcono.destacado,
           ),
         if (onEditar != null)
           BotonIcono(
             icono: Icons.edit,
             tooltip: 'Editar',
-            onPressed: onEditar,
+            alPresionar: onEditar,
+            tipo: TipoBotonIcono.editar,
           ),
         if (onEliminar != null)
           BotonIcono(
             icono: Icons.delete,
             tooltip: 'Eliminar',
-            color: Colors.red,
-            fondo: Colors.red.withOpacity(0.1),
-            onPressed: onEliminar,
+            alPresionar: onEliminar,
+            tipo: TipoBotonIcono.eliminar,
           ),
       ],
     );

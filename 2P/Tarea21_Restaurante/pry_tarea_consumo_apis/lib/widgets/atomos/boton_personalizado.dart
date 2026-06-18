@@ -19,23 +19,17 @@ class BotonPersonalizado extends StatelessWidget {
         onTap: alPresionar,
         borderRadius: BorderRadius.circular(18),
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 24,
-            vertical: 15,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
             gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                EsquemaColor.lavanda,
-                EsquemaColor.azulPastel,
-              ],
+              colors: [EsquemaColor.lavanda, EsquemaColor.azulPastel],
             ),
             boxShadow: [
               BoxShadow(
-                color: EsquemaColor.lavanda.withOpacity(0.32),
+                color: EsquemaColor.lavanda.withValues(alpha: 0.32),
                 blurRadius: 20,
                 offset: const Offset(0, 9),
               ),

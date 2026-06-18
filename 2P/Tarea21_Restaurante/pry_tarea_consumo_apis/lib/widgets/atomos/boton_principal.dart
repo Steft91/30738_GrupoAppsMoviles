@@ -35,10 +35,7 @@ class BotonPrincipal extends StatelessWidget {
           )
         else ...[
           if (icono != null) ...[
-            Icon(
-              icono,
-              color: EsquemaColor.negroTinta,
-            ),
+            Icon(icono, color: EsquemaColor.negroTinta),
             const SizedBox(width: 8),
           ],
           Text(
@@ -58,17 +55,11 @@ class BotonPrincipal extends StatelessWidget {
       child: Opacity(
         opacity: alPresionar == null ? 0.45 : 1,
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 24,
-            vertical: 14,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           decoration: BoxDecoration(
             color: EsquemaColor.amarilloPrincipal,
             borderRadius: BorderRadius.circular(28),
-            border: Border.all(
-              color: EsquemaColor.negroTinta,
-              width: 2,
-            ),
+            border: Border.all(color: EsquemaColor.negroTinta, width: 2),
             boxShadow: const [
               BoxShadow(
                 color: EsquemaColor.negroTinta,
@@ -84,10 +75,7 @@ class BotonPrincipal extends StatelessWidget {
     );
 
     if (anchoCompleto) {
-      return SizedBox(
-        width: double.infinity,
-        child: boton,
-      );
+      return SizedBox(width: double.infinity, child: boton);
     }
 
     return boton;

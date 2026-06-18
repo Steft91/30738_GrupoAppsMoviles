@@ -4,21 +4,15 @@ import 'esquema_color.dart';
 
 class TemaFondos {
   static BoxDecoration get fondoPrincipal {
-    return const BoxDecoration(
-      color: EsquemaColor.fondoClaro,
-    );
+    return const BoxDecoration(color: EsquemaColor.fondoClaro);
   }
 
   static BoxDecoration get fondoOscuro {
-    return const BoxDecoration(
-      color: EsquemaColor.negroTinta,
-    );
+    return const BoxDecoration(color: EsquemaColor.negroTinta);
   }
 
   static BoxDecoration get fondoAmarillo {
-    return const BoxDecoration(
-      color: EsquemaColor.amarilloPrincipal,
-    );
+    return const BoxDecoration(color: EsquemaColor.amarilloPrincipal);
   }
 
   static BoxDecoration get fondoDestacado {
@@ -26,10 +20,7 @@ class TemaFondos {
       gradient: LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [
-          EsquemaColor.amarilloClaro,
-          EsquemaColor.naranjaComic,
-        ],
+        colors: [EsquemaColor.amarilloClaro, EsquemaColor.naranjaComic],
       ),
     );
   }
@@ -48,16 +39,11 @@ class TemaFondos {
     );
   }
 
-  static BoxDecoration fondoSeccion({
-    Color color = EsquemaColor.blancoPapel,
-  }) {
+  static BoxDecoration fondoSeccion({Color color = EsquemaColor.blancoPapel}) {
     return BoxDecoration(
       color: color,
       borderRadius: BorderRadius.circular(22),
-      border: Border.all(
-        color: EsquemaColor.negroTinta,
-        width: 2,
-      ),
+      border: Border.all(color: EsquemaColor.negroTinta, width: 2),
       boxShadow: const [
         BoxShadow(
           color: EsquemaColor.negroTinta,
@@ -67,18 +53,33 @@ class TemaFondos {
       ],
     );
   }
-  static BoxDecoration get fondoRestaurante {
-  return const BoxDecoration(
-    gradient: RadialGradient(
-      center: Alignment(-0.7, -0.8),
-      radius: 1.5,
-      colors: [
-        Color(0xFFFFF3A3),
-        Color(0xFFFFD93D),
-        Color(0xFFF9B208),
+
+  static BoxDecoration aeroGlass() {
+    return BoxDecoration(
+      color: EsquemaColor.blancoPapel.withValues(alpha: 0.72),
+      borderRadius: BorderRadius.circular(24),
+      border: Border.all(
+        color: EsquemaColor.blancoPapel.withValues(alpha: 0.85),
+        width: 1.4,
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: EsquemaColor.negroTinta.withValues(alpha: 0.12),
+          offset: const Offset(0, 12),
+          blurRadius: 28,
+        ),
       ],
-      stops: [0.0, 0.55, 1.0],
-    ),
-  );
-}
+    );
+  }
+
+  static BoxDecoration get fondoRestaurante {
+    return const BoxDecoration(
+      gradient: RadialGradient(
+        center: Alignment(-0.7, -0.8),
+        radius: 1.5,
+        colors: [Color(0xFFFFF3A3), Color(0xFFFFD93D), Color(0xFFF9B208)],
+        stops: [0.0, 0.55, 1.0],
+      ),
+    );
+  }
 }

@@ -40,21 +40,14 @@ class TarjetaRegistro extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: EsquemaColor.azulComic,
                   shape: BoxShape.circle,
-                  border: Border.all(
-                    color: EsquemaColor.negroTinta,
-                    width: 2,
-                  ),
+                  border: Border.all(color: EsquemaColor.negroTinta, width: 2),
                 ),
-                child: Icon(
-                  icono,
-                  color: EsquemaColor.negroTinta,
-                ),
+                child: Icon(icono, color: EsquemaColor.negroTinta),
               ),
               const SizedBox(width: 14),
               Expanded(
                 child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       titulo,
@@ -67,9 +60,7 @@ class TarjetaRegistro extends StatelessWidget {
                     const SizedBox(height: 8),
                     ...datos.map(
                       (dato) => Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 4,
-                        ),
+                        padding: const EdgeInsets.only(bottom: 4),
                         child: Text(
                           dato,
                           style: const TextStyle(

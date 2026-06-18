@@ -21,10 +21,8 @@ class TemaGeneral {
       textButtonTheme: TemaBotones.textButtonTheme,
       inputDecorationTheme: TemaFormulario.inputDecoration,
       cardTheme: TemaTarjetas.cardTheme,
-      bottomNavigationBarTheme:
-          TemaNavegacion.bottomNavigationTheme,
-      navigationBarTheme:
-          TemaNavegacion.navigationBarTheme,
+      bottomNavigationBarTheme: TemaNavegacion.bottomNavigationTheme,
+      navigationBarTheme: TemaNavegacion.navigationBarTheme,
       dividerColor: EsquemaColor.negroTinta,
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: EsquemaColor.azulComic,
@@ -34,10 +32,7 @@ class TemaGeneral {
         foregroundColor: EsquemaColor.negroTinta,
         elevation: 0,
         shape: CircleBorder(
-          side: BorderSide(
-            color: EsquemaColor.negroTinta,
-            width: 2,
-          ),
+          side: BorderSide(color: EsquemaColor.negroTinta, width: 2),
         ),
       ),
       snackBarTheme: SnackBarThemeData(
@@ -48,9 +43,7 @@ class TemaGeneral {
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(
-            color: EsquemaColor.blancoPapel,
-          ),
+          side: const BorderSide(color: EsquemaColor.blancoPapel),
         ),
         behavior: SnackBarBehavior.floating,
       ),
@@ -58,10 +51,7 @@ class TemaGeneral {
         backgroundColor: EsquemaColor.blancoPapel,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(22),
-          side: const BorderSide(
-            color: EsquemaColor.negroTinta,
-            width: 2,
-          ),
+          side: const BorderSide(color: EsquemaColor.negroTinta, width: 2),
         ),
       ),
       visualDensity: VisualDensity.adaptivePlatformDensity,

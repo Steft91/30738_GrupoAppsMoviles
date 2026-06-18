@@ -16,9 +16,7 @@ Future<bool> mostrarDialogoConfirmacion({
       return AlertDialog(
         title: Text(
           titulo,
-          style: const TextStyle(
-            fontWeight: FontWeight.w900,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.w900),
         ),
         content: Text(mensaje),
         actions: [

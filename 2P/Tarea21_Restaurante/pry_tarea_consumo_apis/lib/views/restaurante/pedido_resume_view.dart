@@ -12,8 +12,7 @@ class PedidoResumenView extends StatefulWidget {
   const PedidoResumenView({super.key});
 
   @override
-  State<PedidoResumenView> createState() =>
-      _PedidoResumenViewState();
+  State<PedidoResumenView> createState() => _PedidoResumenViewState();
 }
 
 class _PedidoResumenViewState extends State<PedidoResumenView> {
@@ -21,7 +20,9 @@ class _PedidoResumenViewState extends State<PedidoResumenView> {
   void initState() {
     super.initState();
 
-    Future.microtask(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+
       context.read<PedidoViewModel>().cargarPedidos();
     });
   }
@@ -47,8 +48,7 @@ class _PedidoResumenViewState extends State<PedidoResumenView> {
         content: Text(
           ok
               ? 'Pedido eliminado correctamente'
-              : viewModel.errorMessage ??
-                  'No se pudo eliminar el pedido',
+              : viewModel.errorMessage ?? 'No se pudo eliminar el pedido',
         ),
       ),
     );
@@ -91,10 +91,7 @@ class _PedidoResumenViewState extends State<PedidoResumenView> {
           }
 
           return ListView.builder(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 14,
-              vertical: 12,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             itemCount: pedidoViewModel.pedidos.length,
             itemBuilder: (context, index) {
               final pedido = pedidoViewModel.pedidos[index];

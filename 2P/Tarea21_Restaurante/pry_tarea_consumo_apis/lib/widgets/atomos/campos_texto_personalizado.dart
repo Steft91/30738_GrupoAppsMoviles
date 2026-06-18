@@ -20,24 +20,19 @@ class CampoTextoPersonalizado extends StatelessWidget {
     return TextField(
       controller: controlador,
       obscureText: ocultarTexto,
-      style: const TextStyle(
-        color: EsquemaColor.textoPrincipal,
-      ),
+      style: const TextStyle(color: EsquemaColor.textoPrincipal),
       decoration: InputDecoration(
         labelText: etiqueta,
         prefixIcon: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: EsquemaColor.lavanda.withOpacity(0.18),
+            color: EsquemaColor.lavanda.withValues(alpha: 0.18),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Icon(
-            icono,
-            color: EsquemaColor.lavanda,
-          ),
+          child: Icon(icono, color: EsquemaColor.lavanda),
         ),
         filled: true,
-        fillColor: Colors.white.withOpacity(0.68),
+        fillColor: Colors.white.withValues(alpha: 0.68),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 18,
           vertical: 17,
@@ -48,16 +43,11 @@ class CampoTextoPersonalizado extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide(
-            color: Colors.white.withOpacity(0.8),
-          ),
+          borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.8)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
-          borderSide: const BorderSide(
-            color: EsquemaColor.lavanda,
-            width: 1.8,
-          ),
+          borderSide: const BorderSide(color: EsquemaColor.lavanda, width: 1.8),
         ),
       ),
     );

@@ -12,10 +12,7 @@ import '../../widgets/moleculas/tarjeta_resumen.dart';
 class PedidoFormView extends StatefulWidget {
   final Plato plato;
 
-  const PedidoFormView({
-    super.key,
-    required this.plato,
-  });
+  const PedidoFormView({super.key, required this.plato});
 
   @override
   State<PedidoFormView> createState() => _PedidoFormViewState();
@@ -24,11 +21,9 @@ class PedidoFormView extends StatefulWidget {
 class _PedidoFormViewState extends State<PedidoFormView> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _clienteController =
-      TextEditingController();
+  final TextEditingController _clienteController = TextEditingController();
 
-  final TextEditingController _cantidadController =
-      TextEditingController();
+  final TextEditingController _cantidadController = TextEditingController();
 
   double _total = 0;
 
@@ -46,8 +41,7 @@ class _PedidoFormViewState extends State<PedidoFormView> {
   }
 
   void _calcularTotal() {
-    final cantidad =
-        int.tryParse(_cantidadController.text.trim()) ?? 0;
+    final cantidad = int.tryParse(_cantidadController.text.trim()) ?? 0;
 
     setState(() {
       _total = cantidad * widget.plato.precio;
@@ -61,9 +55,7 @@ class _PedidoFormViewState extends State<PedidoFormView> {
 
     final pedido = Pedido(
       cliente: _clienteController.text.trim(),
-      cantidad: int.parse(
-        _cantidadController.text.trim(),
-      ),
+      cantidad: int.parse(_cantidadController.text.trim()),
       platoId: widget.plato.id!,
     );
 
@@ -77,7 +69,7 @@ class _PedidoFormViewState extends State<PedidoFormView> {
           ok
               ? 'Pedido registrado correctamente'
               : pedidoViewModel.errorMessage ??
-                  'No se pudo registrar el pedido',
+                    'No se pudo registrar el pedido',
         ),
       ),
     );
@@ -92,9 +84,7 @@ class _PedidoFormViewState extends State<PedidoFormView> {
     final pedidoViewModel = context.watch<PedidoViewModel>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Registrar pedido'),
-      ),
+      appBar: AppBar(title: const Text('Registrar pedido')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(18),
         child: Form(
@@ -103,8 +93,7 @@ class _PedidoFormViewState extends State<PedidoFormView> {
             children: [
               ResumenProducto(
                 titulo: widget.plato.nombre,
-                descripcion:
-                    widget.plato.descripcion ?? 'Sin descripción',
+                descripcion: widget.plato.descripcion ?? 'Sin descripción',
                 precio: widget.plato.precio,
                 disponible: widget.plato.disponible,
                 icono: Icons.restaurant_rounded,

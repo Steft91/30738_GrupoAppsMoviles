@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../themes/esquema_color.dart';
 
-enum TipoBotonIcono {
-  normal,
-  editar,
-  eliminar,
-  destacado,
-}
+enum TipoBotonIcono { normal, editar, eliminar, destacado }
 
 class BotonIcono extends StatelessWidget {
   final IconData icono;
@@ -61,10 +56,7 @@ class BotonIcono extends StatelessWidget {
             decoration: BoxDecoration(
               color: colorFondo,
               shape: BoxShape.circle,
-              border: Border.all(
-                color: EsquemaColor.negroTinta,
-                width: 2,
-              ),
+              border: Border.all(color: EsquemaColor.negroTinta, width: 2),
               boxShadow: const [
                 BoxShadow(
                   color: EsquemaColor.negroTinta,
@@ -73,11 +65,7 @@ class BotonIcono extends StatelessWidget {
                 ),
               ],
             ),
-            child: Icon(
-              icono,
-              size: 21,
-              color: colorIcono,
-            ),
+            child: Icon(icono, size: 21, color: colorIcono),
           ),
         ),
       ),

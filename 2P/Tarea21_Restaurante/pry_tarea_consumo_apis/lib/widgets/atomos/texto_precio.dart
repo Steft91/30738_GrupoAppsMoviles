@@ -32,17 +32,11 @@ class TextoPrecio extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 14,
-        vertical: 8,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
         color: EsquemaColor.naranjaComic,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(
-          color: EsquemaColor.negroTinta,
-          width: 2,
-        ),
+        border: Border.all(color: EsquemaColor.negroTinta, width: 2),
         boxShadow: const [
           BoxShadow(
             color: EsquemaColor.negroTinta,

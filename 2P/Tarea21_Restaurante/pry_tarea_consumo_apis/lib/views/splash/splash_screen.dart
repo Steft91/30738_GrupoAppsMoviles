@@ -1,9 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import '../../widgets/atomos/boton_principal.dart';
-import '../../widgets/atomos/campo_formulario.dart';
-import '../../widgets/moleculas/plato_card.dart';
 import '../../themes/index.dart';
 import '../restaurante/plato_list_view.dart';
 
@@ -18,6 +15,7 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  Timer? _navigationTimer;
 
   @override
   void initState() {
@@ -28,27 +26,23 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 2),
     );
 
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
 
     _controller.forward();
 
-    Timer(const Duration(seconds: 3), () {
+    _navigationTimer = Timer(const Duration(seconds: 3), () {
       if (!mounted) return;
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (_) => const PlatoListView(),
-        ),
+        MaterialPageRoute(builder: (_) => const PlatoListView()),
       );
     });
   }
 
   @override
   void dispose() {
+    _navigationTimer?.cancel();
     _controller.dispose();
     super.dispose();
   }

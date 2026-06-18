@@ -37,8 +37,8 @@ class EncabezadoDetalle extends StatelessWidget {
               Text(
                 titulo,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               if (subtitulo != null) ...[
                 const SizedBox(height: 4),
@@ -46,7 +46,10 @@ class EncabezadoDetalle extends StatelessWidget {
               ],
               if (activo != null && textoEstado != null) ...[
                 const SizedBox(height: 8),
-                EtiquetaEstado(texto: textoEstado!, activo: activo!),
+                EtiquetaEstado(
+                  texto: textoEstado!,
+                  tipo: activo! ? TipoEstado.exito : TipoEstado.error,
+                ),
               ],
             ],
           ),

@@ -11,10 +11,7 @@ class TemaTarjetas {
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(22),
-        side: const BorderSide(
-          color: EsquemaColor.negroTinta,
-          width: 2,
-        ),
+        side: const BorderSide(color: EsquemaColor.negroTinta, width: 2),
       ),
     );
   }
@@ -23,10 +20,7 @@ class TemaTarjetas {
     return BoxDecoration(
       color: EsquemaColor.blancoPapel,
       borderRadius: BorderRadius.circular(22),
-      border: Border.all(
-        color: EsquemaColor.negroTinta,
-        width: 2,
-      ),
+      border: Border.all(color: EsquemaColor.negroTinta, width: 2),
       boxShadow: const [
         BoxShadow(
           color: EsquemaColor.negroTinta,
@@ -41,10 +35,7 @@ class TemaTarjetas {
     return BoxDecoration(
       color: EsquemaColor.negroTinta,
       borderRadius: BorderRadius.circular(22),
-      border: Border.all(
-        color: EsquemaColor.negroTinta,
-        width: 2,
-      ),
+      border: Border.all(color: EsquemaColor.negroTinta, width: 2),
       boxShadow: const [
         BoxShadow(
           color: EsquemaColor.azulComic,
@@ -59,10 +50,7 @@ class TemaTarjetas {
     return BoxDecoration(
       color: EsquemaColor.amarilloPrincipal,
       borderRadius: BorderRadius.circular(22),
-      border: Border.all(
-        color: EsquemaColor.negroTinta,
-        width: 2,
-      ),
+      border: Border.all(color: EsquemaColor.negroTinta, width: 2),
       boxShadow: const [
         BoxShadow(
           color: EsquemaColor.negroTinta,
@@ -80,16 +68,9 @@ class TemaTarjetas {
     return BoxDecoration(
       color: color,
       borderRadius: BorderRadius.circular(22),
-      border: Border.all(
-        color: EsquemaColor.negroTinta,
-        width: 2,
-      ),
+      border: Border.all(color: EsquemaColor.negroTinta, width: 2),
       boxShadow: [
-        BoxShadow(
-          color: sombra,
-          offset: const Offset(5, 5),
-          blurRadius: 0,
-        ),
+        BoxShadow(color: sombra, offset: const Offset(5, 5), blurRadius: 0),
       ],
     );
   }

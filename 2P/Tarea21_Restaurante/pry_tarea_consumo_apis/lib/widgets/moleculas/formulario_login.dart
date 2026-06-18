@@ -31,15 +31,12 @@ class FormularioLogin extends StatelessWidget {
               gradient: const LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [
-                  EsquemaColor.rosaPastel,
-                  EsquemaColor.lavanda,
-                ],
+                colors: [EsquemaColor.rosaPastel, EsquemaColor.lavanda],
               ),
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: EsquemaColor.lavanda.withOpacity(0.3),
+                  color: EsquemaColor.lavanda.withValues(alpha: 0.3),
                   blurRadius: 25,
                   offset: const Offset(0, 10),
                 ),
@@ -64,10 +61,7 @@ class FormularioLogin extends StatelessWidget {
           const Text(
             "Ingresa tus datos para continuar",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: EsquemaColor.textoSecundario,
-              fontSize: 14,
-            ),
+            style: TextStyle(color: EsquemaColor.textoSecundario, fontSize: 14),
           ),
           const SizedBox(height: 30),
           CampoTextoPersonalizado(
@@ -85,10 +79,7 @@ class FormularioLogin extends StatelessWidget {
           const SizedBox(height: 28),
           SizedBox(
             width: double.infinity,
-            child: BotonPersonalizado(
-              texto: "Ingresar",
-              alPresionar: alEnviar,
-            ),
+            child: BotonPersonalizado(texto: "Ingresar", alPresionar: alEnviar),
           ),
         ],
       ),

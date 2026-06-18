@@ -35,7 +35,8 @@ const PlatoController = {
 
   async crearPlato(req, res) {
     try {
-      const { nombre, descripcion, precio, disponible } = req.body;
+      const { nombre, descripcion, precio, imagen_url, imagenUrl, disponible } =
+        req.body;
 
       if (!nombre || precio === undefined) {
         return res.status(400).json({
@@ -53,6 +54,7 @@ const PlatoController = {
         nombre,
         descripcion,
         precio,
+        imagen_url: imagen_url ?? imagenUrl ?? null,
         disponible: disponible ?? true
       });
 
@@ -71,7 +73,8 @@ const PlatoController = {
   async actualizarPlato(req, res) {
     try {
       const { id } = req.params;
-      const { nombre, descripcion, precio, disponible } = req.body;
+      const { nombre, descripcion, precio, imagen_url, imagenUrl, disponible } =
+        req.body;
 
       if (!nombre || precio === undefined) {
         return res.status(400).json({
@@ -89,6 +92,7 @@ const PlatoController = {
         nombre,
         descripcion,
         precio,
+        imagen_url: imagen_url ?? imagenUrl ?? null,
         disponible
       });
 

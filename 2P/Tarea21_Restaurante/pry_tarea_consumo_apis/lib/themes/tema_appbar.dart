@@ -15,9 +15,7 @@ class TemaAppBar {
         fontSize: 19,
         fontWeight: FontWeight.w900,
       ),
-      iconTheme: IconThemeData(
-        color: EsquemaColor.negroTinta,
-      ),
+      iconTheme: IconThemeData(color: EsquemaColor.negroTinta),
     );
   }
 
@@ -33,9 +31,7 @@ class TemaAppBar {
         fontSize: 19,
         fontWeight: FontWeight.w900,
       ),
-      iconTheme: IconThemeData(
-        color: EsquemaColor.blancoPapel,
-      ),
+      iconTheme: IconThemeData(color: EsquemaColor.blancoPapel),
     );
   }
 

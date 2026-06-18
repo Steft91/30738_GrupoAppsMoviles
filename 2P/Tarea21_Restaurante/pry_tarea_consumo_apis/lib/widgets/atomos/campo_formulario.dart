@@ -33,9 +33,7 @@ class CampoFormulario extends StatelessWidget {
       enabled: habilitado,
       decoration: InputDecoration(
         labelText: etiqueta,
-        prefixIcon: icono == null
-            ? null
-            : Icon(icono),
+        prefixIcon: icono == null ? null : Icon(icono),
       ),
     );
   }
