@@ -3,12 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/entities/contacto.dart';
 import '../../themes/app_styles.dart';
-import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_card.dart';
 import '../../widgets/custom_icon.dart';
 import '../../widgets/custom_text.dart';
 import '../providers/contacto_provider.dart';
 import '../providers/theme_provider.dart';
+import '../providers/phone_provider.dart';
 import 'edit_contact_page.dart';
 import '../utils/snackbar_helper.dart';
 
@@ -50,7 +50,17 @@ class _ContactsPageState extends ConsumerState<ContactsPage> {
     }
 
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Contactos'),
+      appBar: AppBar(
+        title: const Row(
+          children: [
+            Icon(Icons.contacts, size: 28),
+            SizedBox(width: 8),
+            Text('Mis Contactos'),
+          ],
+        ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        elevation: 0,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -95,47 +105,149 @@ class _ContactsPageState extends ConsumerState<ContactsPage> {
                         final contacto = filtered[index];
 
                         return CustomCard(
-                          child: ListTile(
-                            leading: const CustomIcon(icon: Icons.person),
-                            title: CustomText(
-                              text: contacto.nombre,
-                              style: AppStyles.subtitle,
-                            ),
-                            subtitle: CustomText(
-                              text: '${contacto.telefono} ${contacto.correo}',
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: const CustomIcon(icon: Icons.edit),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => EditContactPage(
-                                          contactoId: contacto.id!,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Información del contacto (arriba)
+                              Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // Nombre
+                                    Row(
+                                      children: [
+                                        const CustomIcon(icon: Icons.person_outline, size: 24),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: CustomText(
+                                            text: contacto.nombre,
+                                            style: AppStyles.subtitle,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
+                                      ],
+                                    ),
+                                    const SizedBox(height: 12),
+                                    // Teléfono
+                                    Row(
+                                      children: [
+                                        const CustomIcon(icon: Icons.phone, size: 20),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: CustomText(
+                                            text: contacto.telefono,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 8),
+                                    // Correo
+                                    Row(
+                                      children: [
+                                        const CustomIcon(icon: Icons.email_outlined, size: 20),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: CustomText(
+                                            text: contacto.correo,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                                IconButton(
-                                  icon: const CustomIcon(icon: Icons.delete),
-                                  onPressed: () async {
-                                    try {
-                                      await ref
-                                          .read(
-                                            contactoNotifierProvider.notifier,
-                                          )
-                                          .eliminarContactos(contacto.id!);
-                                      SnackbarHelper.contactoEliminado(context);
-                                    } catch (e) {
-                                      SnackbarHelper.errorGuardar(context);
-                                    }
-                                  },
+                              ),
+                              const Divider(height: 1),
+                              // Botones de acción (abajo)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    // Botón Llamar
+                                    Column(
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(Icons.call,
+                                              color: Colors.green),
+                                          tooltip: 'Llamar',
+                                          onPressed: () async {
+                                            final success = await ref
+                                                .read(phoneProvider)
+                                                .makeCall(contacto.telefono);
+                                            if (success && context.mounted) {
+                                              SnackbarHelper.show(
+                                                context,
+                                                'Iniciando llamada a ${contacto.nombre}',
+                                              );
+                                            } else if (!success &&
+                                                context.mounted) {
+                                              SnackbarHelper.errorGuardar(
+                                                  context);
+                                            }
+                                          },
+                                        ),
+                                        const CustomText(
+                                          text: 'Llamar',
+                                        ),
+                                      ],
+                                    ),
+                                    // Botón Editar
+                                    Column(
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(Icons.edit,
+                                              color: Colors.blue),
+                                          tooltip: 'Editar',
+                                          onPressed: () {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (_) =>
+                                                    EditContactPage(
+                                                  contactoId: contacto.id!,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        const CustomText(
+                                          text: 'Editar',
+                                        ),
+                                      ],
+                                    ),
+                                    // Botón Eliminar
+                                    Column(
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(Icons.delete,
+                                              color: Colors.red),
+                                          tooltip: 'Eliminar',
+                                          onPressed: () async {
+                                            try {
+                                              await ref
+                                                  .read(
+                                                    contactoNotifierProvider
+                                                        .notifier,
+                                                  )
+                                                  .eliminarContactos(
+                                                      contacto.id!);
+                                              SnackbarHelper
+                                                  .contactoEliminado(context);
+                                            } catch (e) {
+                                              SnackbarHelper.errorGuardar(
+                                                  context);
+                                            }
+                                          },
+                                        ),
+                                        const CustomText(
+                                          text: 'Eliminar',
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         );
                       },
