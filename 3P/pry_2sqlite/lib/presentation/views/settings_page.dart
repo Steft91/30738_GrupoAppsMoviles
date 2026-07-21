@@ -13,7 +13,10 @@ class SettingsPage extends ConsumerWidget {
     final isDark = ref.watch(themeProvider);
 
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Configuración'),
+      appBar: const CustomAppBar(
+        title: 'Configuración',
+        icon: Icon(Icons.settings),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(

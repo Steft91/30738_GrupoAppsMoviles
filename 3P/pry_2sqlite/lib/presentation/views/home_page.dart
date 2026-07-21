@@ -85,7 +85,11 @@ class _ContactoPageState extends ConsumerState<ContactoPage> {
     final contactos = ref.watch(contactoNotifierProvider);
 
     return Scaffold(
-      appBar: const CustomAppBar(title: 'CRUD Contactos'),
+      appBar: const CustomAppBar(
+        title: 'CRUD Contactos',
+        icon: Icon(Icons.home),
+      ),
+      
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

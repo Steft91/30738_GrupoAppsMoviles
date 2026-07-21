@@ -5,6 +5,7 @@ import '../../domain/entities/contacto.dart';
 import '../../themes/app_styles.dart';
 import '../../widgets/custom_card.dart';
 import '../../widgets/custom_icon.dart';
+import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_text.dart';
 import '../providers/contacto_provider.dart';
 import '../providers/theme_provider.dart';
@@ -50,17 +51,11 @@ class _ContactsPageState extends ConsumerState<ContactsPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Row(
-          children: [
-            Icon(Icons.contacts, size: 28),
-            SizedBox(width: 8),
-            Text('Mis Contactos'),
-          ],
-        ),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        elevation: 0,
+      appBar: const CustomAppBar(
+        title: 'Contactos',
+        icon: Icon(Icons.list),
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
