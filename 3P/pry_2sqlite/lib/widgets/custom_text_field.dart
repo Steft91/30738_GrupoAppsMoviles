@@ -5,6 +5,9 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final TextInputType keyboardType;
   final bool obscureText;
+  final String? hintText;
+  final Widget? prefixIcon;
+  final int? maxLines;
 
   const CustomTextField({
     super.key,
@@ -12,6 +15,9 @@ class CustomTextField extends StatelessWidget {
     required this.controller,
     this.keyboardType = TextInputType.text,
     this.obscureText = false,
+    this.hintText,
+    this.prefixIcon,
+    this.maxLines = 1,
   });
 
   @override
@@ -20,8 +26,11 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
+      maxLines: maxLines,
       decoration: InputDecoration(
         labelText: label,
+        hintText: hintText,
+        prefixIcon: prefixIcon,
       ),
     );
   }

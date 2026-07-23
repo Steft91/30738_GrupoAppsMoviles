@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/entities/contacto.dart';
 import '../../themes/app_styles.dart';
 import '../../widgets/custom_card.dart';
 import '../../widgets/custom_icon.dart';
@@ -12,6 +11,7 @@ import '../providers/theme_provider.dart';
 import '../providers/phone_provider.dart';
 import 'edit_contact_page.dart';
 import '../utils/snackbar_helper.dart';
+import '../utils/app_strings.dart';
 
 class ContactsPage extends ConsumerStatefulWidget {
   final void Function()? onEditAndGoHome;
@@ -35,15 +35,19 @@ class _ContactsPageState extends ConsumerState<ContactsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final lang = ref.watch(languageProvider);
     final contactos = ref.watch(contactoNotifierProvider);
 
-    // Filter by search query
     final filtered = contactos.where((c) {
       final nombre = c.nombre.toLowerCase();
-      return nombre.contains(_query.toLowerCase());
+      final telefono = c.telefono.toLowerCase();
+      final correo = c.correo.toLowerCase();
+      final query = _query.toLowerCase();
+      return nombre.contains(query) ||
+          telefono.contains(query) ||
+          correo.contains(query);
     }).toList();
 
-    // Sort if alphabetical requested
     if (_alphabetical) {
       filtered.sort(
         (a, b) => a.nombre.toLowerCase().compareTo(b.nombre.toLowerCase()),
@@ -51,9 +55,9 @@ class _ContactsPageState extends ConsumerState<ContactsPage> {
     }
 
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Contactos',
-        icon: Icon(Icons.list),
+      appBar: CustomAppBar(
+        title: AppStrings.savedContactsTitle(lang),
+        icon: const Icon(Icons.list),
       ),
 
       body: Padding(
@@ -65,16 +69,27 @@ class _ContactsPageState extends ConsumerState<ContactsPage> {
                 Expanded(
                   child: TextField(
                     controller: _searchController,
-                    decoration: const InputDecoration(
-                      hintText: 'Buscar por nombre',
-                      prefixIcon: Icon(Icons.search),
+                    decoration: InputDecoration(
+                      hintText: AppStrings.searchHint(lang),
+                      prefixIcon: const Icon(Icons.search),
+                      suffixIcon: _query.isNotEmpty
+                          ? IconButton(
+                              icon: const Icon(Icons.close_rounded),
+                              onPressed: () {
+                                _searchController.clear();
+                                setState(() => _query = '');
+                              },
+                            )
+                          : null,
                     ),
                     onChanged: (v) => setState(() => _query = v),
                   ),
                 ),
                 const SizedBox(width: 8),
                 IconButton(
-                  tooltip: 'Ordenar alfabéticamente',
+                  tooltip: lang == AppLanguage.es
+                      ? 'Ordenar alfabéticamente'
+                      : 'Sort alphabetically',
                   icon: Icon(
                     Icons.sort_by_alpha,
                     color: _alphabetical
@@ -89,9 +104,9 @@ class _ContactsPageState extends ConsumerState<ContactsPage> {
             const SizedBox(height: 12),
             Expanded(
               child: filtered.isEmpty
-                  ? const Center(
+                  ? Center(
                       child: CustomText(
-                        text: 'No existen contactos registrados',
+                        text: AppStrings.emptyStateTitle(lang),
                       ),
                     )
                   : ListView.builder(
@@ -173,7 +188,9 @@ class _ContactsPageState extends ConsumerState<ContactsPage> {
                                             if (success && context.mounted) {
                                               SnackbarHelper.show(
                                                 context,
-                                                'Iniciando llamada a ${contacto.nombre}',
+                                                lang == AppLanguage.es
+                                                    ? 'Iniciando llamada a ${contacto.nombre}'
+                                                    : 'Calling ${contacto.nombre}',
                                               );
                                             } else if (!success &&
                                                 context.mounted) {
@@ -205,8 +222,8 @@ class _ContactsPageState extends ConsumerState<ContactsPage> {
                                             );
                                           },
                                         ),
-                                        const CustomText(
-                                          text: 'Editar',
+                                        CustomText(
+                                          text: lang == AppLanguage.es ? 'Editar' : 'Edit',
                                         ),
                                       ],
                                     ),
@@ -234,8 +251,8 @@ class _ContactsPageState extends ConsumerState<ContactsPage> {
                                             }
                                           },
                                         ),
-                                        const CustomText(
-                                          text: 'Eliminar',
+                                        CustomText(
+                                          text: lang == AppLanguage.es ? 'Eliminar' : 'Delete',
                                         ),
                                       ],
                                     ),

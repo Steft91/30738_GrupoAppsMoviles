@@ -6,8 +6,9 @@ String? validarNombre(String? value) {
 }
 
 String? validarTelefono(String? value) {
-  if (value == null || value.trim().isEmpty)
+  if (value == null || value.trim().isEmpty) {
     return 'El teléfono es obligatorio';
+  }
   final digitsOnly = RegExp(r'^\d{10}$');
   if (!digitsOnly.hasMatch(value)) return 'El teléfono debe tener 10 dígitos';
   return null;

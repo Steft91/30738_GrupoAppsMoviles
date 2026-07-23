@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'presentation/providers/theme_provider.dart';
 import 'database/sqlite_service.dart';
 import 'presentation/providers/contacto_provider.dart';
-import 'presentation/views/settings_page.dart';
 import 'presentation/views/splash_screen.dart';
 import 'themes/app_theme.dart';
 
@@ -30,7 +29,7 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      darkTheme: ThemeData.dark(),
+      darkTheme: AppTheme.darkTheme,
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
       home: const SplashScreen(),
     );

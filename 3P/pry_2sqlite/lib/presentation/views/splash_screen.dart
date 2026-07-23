@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset('assets/images/Logo_Jely.png', width: 120, height: 120),
+            Image.asset('assets/images/logo.png', width: 120, height: 120),
             const SizedBox(height: 12),
             const Text('Contactos', style: TextStyle(fontSize: 24)),
           ],

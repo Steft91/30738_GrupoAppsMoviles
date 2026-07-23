@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'home_page.dart';
+import 'contacto_page.dart';
 import 'contacts_page.dart';
 import 'settings_page.dart';
+import '../providers/theme_provider.dart';
+import '../utils/app_strings.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});
@@ -29,6 +31,7 @@ class _MainPageState extends ConsumerState<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    final lang = ref.watch(languageProvider);
     final pages = <Widget>[
       const ContactoPage(),
       ContactsPage(onEditAndGoHome: _goToHome),
@@ -40,12 +43,18 @@ class _MainPageState extends ConsumerState<MainPage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Contactos'),
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Configuración',
+            icon: const Icon(Icons.home),
+            label: AppStrings.homeTab(lang),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.list),
+            label: AppStrings.contactsTab(lang),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.settings),
+            label: AppStrings.settingsTab(lang),
           ),
         ],
       ),
