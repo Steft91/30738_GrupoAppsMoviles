@@ -4,10 +4,28 @@
 **/.flutter-plugins
 **/.flutter-plugins-dependencies
 **/.packages
+**/.scannerwork/
 
 # Android / APK generados
 **/*.apk
 **/*.aab
+
+# LaTeX / informe
+3P/pry_2sqlite/informe/*.aux
+3P/pry_2sqlite/informe/*.bbl
+3P/pry_2sqlite/informe/*.bcf
+3P/pry_2sqlite/informe/*.blg
+3P/pry_2sqlite/informe/*.fdb_latexmk
+3P/pry_2sqlite/informe/*.fls
+3P/pry_2sqlite/informe/*.lof
+3P/pry_2sqlite/informe/*.log
+3P/pry_2sqlite/informe/*.out
+3P/pry_2sqlite/informe/*.run.xml
+3P/pry_2sqlite/informe/*.synctex.gz
+3P/pry_2sqlite/informe/*.toc
+3P/pry_2sqlite/informe/*.pdf
+3P/pry_2sqlite/informe/*.nav
+3P/pry_2sqlite/informe/*.snm
 
 # Node.js
 **/node_modules/
